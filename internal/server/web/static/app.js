@@ -1,4 +1,4 @@
-// Fixes tab key in textarea
+"""// Fixes tab key in textarea
 document.querySelector('textarea')?.addEventListener('keydown', function (e) {
   if (e.key.toLowerCase() === 'tab') {
     e.preventDefault();
@@ -7,9 +7,18 @@ document.querySelector('textarea')?.addEventListener('keydown', function (e) {
     const end = this.selectionEnd;
 
     // Set textarea value to: text before caret + tab + text after caret
-    this.value = this.value.substring(0, start) + '\t' + this.value.substring(end);
+    this.value = this.value.substring(0, start) + '	' + this.value.substring(end);
 
     // Move caret to right position
     this.selectionStart = this.selectionEnd = start + 1;
   }
 });
+
+// Allows for saving with CTRL+S and CMD+S
+document.addEventListener('keydown', function(e) {
+  const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+  if (e.key.toLowerCase() === 's' && (isMac ? e.metaKey : e.ctrlKey)) {
+    e.preventDefault();
+    document.querySelector('#text').submit();
+  }
+});""
